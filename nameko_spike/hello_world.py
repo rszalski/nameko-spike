@@ -1,10 +1,12 @@
 """
 Hello World Nameko Microservice
 """
+import json
 import random
 
 from nameko.events import event_handler, EventDispatcher, BROADCAST
 from nameko.rpc import rpc, RpcProxy
+from nameko.web.handlers import http
 
 
 class GreetingService(object):
@@ -59,3 +61,19 @@ class AwareGuard(object):
     @event_handler('watchdog', 'bark', handler_type=BROADCAST, reliable_delivery=False)
     def on_bark(self, payload):
         print('Good boy!')
+
+
+class HttpService(object):
+    name = 'http_service'
+
+    @http('GET', '/get_user/<int:id>')
+    def on_get(self, request, id):
+        return json.dumps({
+            'summary': 'Here is a list of user {} properties ...'.format(id),
+            'values': [],
+        })
+
+    @http('POST', '/save_state')
+    def on_post(self, request):
+        return 201, 'The game state has been saved! {}'.format(request.get_data())
+
