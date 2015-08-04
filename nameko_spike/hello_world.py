@@ -9,7 +9,7 @@ from nameko.rpc import rpc, RpcProxy
 from nameko.web.handlers import http
 
 
-class GreetingService(object):
+class GreetingService:
     name = 'greeting_service'
 
     title_builder = RpcProxy('title_builder')
@@ -20,7 +20,7 @@ class GreetingService(object):
         return 'Hello {}!'.format(full_name)
 
 
-class NameBuilder(object):
+class NameBuilder:
     name = 'title_builder'
 
     available_titles = [
@@ -37,7 +37,7 @@ class NameBuilder(object):
         return '{} {}'.format(name, title)
 
 
-class WatchDog(object):
+class WatchDog:
     name = 'watchdog'
 
     dispatch = EventDispatcher()
@@ -47,7 +47,7 @@ class WatchDog(object):
         self.dispatch('bark', 'Woof!')
 
 
-class SleepyGuard(object):
+class SleepyGuard:
     name = 'sleepy_guard'
 
     @event_handler('watchdog', 'bark', handler_type=BROADCAST, reliable_delivery=False)
@@ -55,7 +55,7 @@ class SleepyGuard(object):
         print('Oi! I\'m not sleeping, no need to bark!')
 
 
-class AwareGuard(object):
+class AwareGuard:
     name = 'aware_guard'
 
     @event_handler('watchdog', 'bark', handler_type=BROADCAST, reliable_delivery=False)
@@ -63,7 +63,7 @@ class AwareGuard(object):
         print('Good boy!')
 
 
-class HttpService(object):
+class HttpService:
     name = 'http_service'
 
     @http('GET', '/get_user/<int:id>')
