@@ -1,6 +1,5 @@
-from nameko.runners import ServiceRunner
-from nameko.testing.services import worker_factory, entrypoint_hook, replace_dependencies
-from nameko.testing.utils import get_container
+from nameko.testing.services import worker_factory
+
 from nameko_spike.hello_world import GreetingService, NameBuilder
 
 
